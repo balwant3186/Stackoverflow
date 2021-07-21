@@ -4,7 +4,6 @@
   <div class="row">
     <div class="col-md-12">
       <h1 class="text-center mb-5 main-heading">Stackoverflow Search</h1>
-      <p>{{timeLeft}} Seconds Left....</p>
       <div class="input-group mb-3">
         <input type="text" (keyup.enter)="searchKeywords()" class="form-control" name="search" [(ngModel)]="input" placeholder="Search for keywords ..." aria-label="Recipient's username" aria-describedby="basic-addon2">
         <div class="input-group-append">
@@ -74,7 +73,9 @@
       </div>
       <div class="error-text-container" *ngIf="notFound">
         <p class="error-text">Not Found</p>
+        <img class="error-image" src="../../assets/images/not_found.svg" alt="404 page">
       </div>
+
       <div class="error-text-container" *ngIf="showLimit">
         <h3>Notes</h3>
         <p class="error-text">You can search only 5 times in a minute.</p>

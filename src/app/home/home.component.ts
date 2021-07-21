@@ -1,12 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
-import { map, shareReplay, startWith, tap } from 'rxjs/operators';
 
-const CACHE_KEY = 'cacheKey'
 
 @Component({
   selector: 'app-home',
@@ -19,25 +13,15 @@ export class HomeComponent implements OnInit {
   public all_questions;
   public loaderActive: boolean = false;
   public notFound: boolean = false;
-
   public showPagination: boolean = false;
-
   public acceptedValue: boolean;
   public showLimit: boolean = false
-
-  params: string = '';
-
   public answer_count: number;
   public view_count: number;
-
   public wiki;
   public order = 'desc';
-
   public closed;
   public sort = 'activity';
-  data$: Observable<any>;
-
-  public questions;
 
   public counter = 0;
   timeLeft: number = 60;
@@ -45,8 +29,6 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private router: Router,
-    private http: HttpClient
   ) {
     this.startTimer()
   }
@@ -87,16 +69,10 @@ export class HomeComponent implements OnInit {
   }
 
   public searchKeywords() {
-
     this.showLimit = false
-
-
     this.notFound = false;
     this.loaderActive = true;
-
     let url = `title=${this.input}&accepted=${this.acceptedValue}&answers=${this.answer_count}&closed=${this.closed}&views=${this.view_count}&wiki=${this.wiki}&order=${this.order}&sort=${this.sort}`;
-
-
     if(localStorage.getItem(url)) {
       this.all_questions = JSON.parse(localStorage.getItem(url))
       this.loaderActive = false
@@ -104,7 +80,6 @@ export class HomeComponent implements OnInit {
       this.showPagination = true
       return
     }
-
     if(this.counter == 5 && this.timeLeft > 0) {
       this.loaderActive = false
       this.showLimit = true
@@ -114,13 +89,7 @@ export class HomeComponent implements OnInit {
       this.counter++
       this.all_questions = data['items']
       this.loaderActive = false
-        this.totalLength = this.all_questions.length;
-      if (this.totalLength > 8) {
-        this.showPagination = true;
-      } else {
-        this.showPagination = false;
-      }
-
+      this.all_questions.length > 8 ? this.showPagination = true : this.showPagination = false;
       if (this.all_questions.length == 0) {
         this.notFound = true;
         this.loaderActive = false;
@@ -128,15 +97,13 @@ export class HomeComponent implements OnInit {
       }
       this.loaderActive = false;
       this.input = ""
-      if(localStorage.length > 10) {
+      if(localStorage.length > 50) {
         localStorage.clear()
       }
       localStorage.setItem(url, JSON.stringify(data['items']))
-
     })
 
   }
-
   public goToQuestion(link) {
     window.open(link, '_blank');
   }

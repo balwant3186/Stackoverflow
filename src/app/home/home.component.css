@@ -16,10 +16,13 @@
   padding: 1em 0.5em;
   border-radius: 0.6em;
 }
+.error-image {
+  width: 10em;
+}
 .error-text-container {
   margin-top: 2em;
-  padding: 0.3em 0 0.1em 0;
-  background-color: red;
+  padding: 1em 0;
+  background-color: #ffcccb;
   color: #fff;
   font-size: 1.5em;
   text-align: center;
