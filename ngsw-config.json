@@ -1,0 +1,43 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ],
+        "urls": ["https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&amp;family=Rubik:ital,wght@1,500;1,600;1,700&amp;display=swap"]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**",
+          "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "search",
+      "urls": ["https://api.stackexchange.com/2.3/search/advanced/*", "https://api.stackexchange.com/2.3/search/advanced?…undefined&wiki=undefined&order=desc&sort=activity", "https://api.stackexchange.com/*"],
+      "cacheConfig": {
+        "maxSize": 5,
+        "maxAge": "5h",
+        "timeout": "10s",
+        "strategy": "performance"
+      }
+    }
+  ]
+}

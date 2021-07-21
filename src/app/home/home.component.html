@@ -1,0 +1,135 @@
+
+
+<div class="container search-container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center mb-5 main-heading">Stackoverflow Search</h1>
+      <p>{{timeLeft}} Seconds Left....</p>
+      <div class="input-group mb-3">
+        <input type="text" (keyup.enter)="searchKeywords()" class="form-control" name="search" [(ngModel)]="input" placeholder="Search for keywords ..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <span class="input-group-text" id="basic-addon2" (click)="searchKeywords()">Search</span>
+        </div>
+      </div>
+      <div class="params-container">
+
+        <div class="param">
+          <label for="option-one">Accepted: &nbsp;</label>
+          <select class="option-input" name="option-one" id="option-one" (change)="onChange($event.target.value)">
+            <option value=""></option>
+            <option value="True">True</option>
+            <option value="False">False</option>
+          </select>
+        </div>
+
+        <div class="param">
+          <label for="option-two">Answers: &nbsp;</label>
+          <input class="number-input" type="number" [(ngModel)]="answer_count">
+        </div>
+
+        <div class="param">
+          <label for="option-three">Closed: &nbsp;</label>
+          <select class="option-input" name="option-one" id="option-three" (change)="onChangeClosed($event.target.value)">
+            <option value=""></option>
+            <option value="True">True</option>
+            <option value="False">False</option>
+          </select>
+        </div>
+
+        <div class="param">
+          <label for="option-four">Views: &nbsp;</label>
+          <input class="number-input" type="number" [(ngModel)]="view_count">
+        </div>
+
+        <div class="param">
+          <label for="option-five">Wiki: &nbsp;</label>
+          <select class="option-input" name="option-one" id="option-five" (change)="onChangeWiki($event.target.value)">
+            <option value=""></option>
+            <option value="True">True</option>
+            <option value="False">False</option>
+          </select>
+        </div>
+
+        <div class="param">
+          <label for="option-six">Order: &nbsp;</label>
+          <select class="option-input" name="option-one" id="option-six" (change)="onChangeOrder($event.target.value)">
+            <option value=""></option>
+            <option value="asc">Asc</option>
+            <option value="desc" selected="selected">Desc</option>
+          </select>
+        </div>
+
+        <div class="param">
+          <label for="option-seven">Sort: &nbsp;</label>
+          <select class="option-input" name="option-one" id="option-seven" (change)="onChangeSort($event.target.value)">
+
+            <option value="activity" selected="selected">activity</option>
+            <option value="votes">votes</option>
+            <option value="creation">creation</option>
+            <option value="relevance">relevance</option>
+          </select>
+        </div>
+
+
+      </div>
+      <div class="error-text-container" *ngIf="notFound">
+        <p class="error-text">Not Found</p>
+      </div>
+      <div class="error-text-container" *ngIf="showLimit">
+        <h3>Notes</h3>
+        <p class="error-text">You can search only 5 times in a minute.</p>
+        <p class="error-text">You can search only 100 times a day.</p>
+      </div>
+      <div class="page-footer pb-0 pt-3 mt-5" *ngIf="this.showPagination">
+        <pagination-controls class="text-center" responsive="true"
+        previousLabel="Prev"
+        nextLabel="Next" (pageChange)="page = $event"></pagination-controls>
+      </div>
+    </div>
+    </div>
+</div>
+
+
+
+<div class="container result-container">
+  <div class="loader" *ngIf="loaderActive">
+    <img src="../../assets/images/loading-spinner.svg" alt="">
+  </div>
+
+  <div class="text-center bg-success p-3 text-white mt-5 mb-5" *ngIf="this.all_questions.length > 0">{{ this.all_questions.length }} results found</div>
+
+  <div class="row question-box"  *ngFor="let question of all_questions | paginate: {
+    itemsPerPage: 8, currentPage: page, totalItems: totalLength
+  } ">
+    <div class="col-md-12 question-box-container">
+      <div class="question-container">
+        <h1 class="question-name" (click)="goToQuestion(question.link)">{{ question.title }}</h1>
+
+        <div class="question-details">
+          <span><i>Viewed: </i> <span>{{ question.view_count }}</span></span>
+          &nbsp;
+          <span><i>Answers: </i> <span> {{ question.answer_count }}</span></span>
+        </div>
+        <div class="tags-container" >
+          <div class="tag small-text" *ngFor="let label of question.tags">{{ label }}</div>
+        </div>
+      </div>
+
+      <div class="image-container">
+        <a [href]="question.owner.link" target="_blank"><img class="profile-image" [src]="question.owner.profile_image" [alt]="question.owner.display_name"></a>
+        <div class="user-info">
+          <a class="normal-text user-name" target="_blank" [href]="question.owner.link">{{ question.owner.display_name }}</a>
+          <br>
+          <span class="normal-text">Score: {{ question.score }}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</div>
+
+
+

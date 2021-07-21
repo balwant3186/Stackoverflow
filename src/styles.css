@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-main: #25BEC2;
+  --font-main: "Rubik";
+  --font-secondary: "Roboto";
+}
+.loader {
+  position: absolute;
+  top:  0;
+  bottom: 0;
+  left:  0;
+  right:  0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+.loader img {
+  height: 6em;
+}
+
+* {
+  font-family: var(--font-secondary);
+}
