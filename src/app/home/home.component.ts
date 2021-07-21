@@ -8,7 +8,7 @@ import { ApiService } from '../api.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  public input: string = 'How to center an image';
+  public input: string = '';
 
   public all_questions;
   public loaderActive: boolean = false;
